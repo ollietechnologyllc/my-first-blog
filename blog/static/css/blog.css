@@ -79,6 +79,13 @@ h4 {
     color: #FFFFFF;
     background-color: #C25100;
 }
+
+.bi-file-earmark-plus {
+    height = "25"
+    width = "25"
+}
+	
+
 #.row{
 #    background-color: #B5DF87;
 #    border-color: #000000;
