@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Blog</title>
+	</head>
+<body>
+    <h1>This is the most <em>important</em> heading</h1>
+    <p>Hi there!</p>
+    <br>
+    <p>It <strong>works!</strong></p>
+    <a href ="https://djangogirls.org">Django Tutorial</a>
+    <article>This section is an article an the contents are considered self contained.
+	<ul>This is important because:
+	    <li>It is nice to have your information organized
+	    <li>Lists can keep track of items
+	</ul>
+
+    </article>
+    <div>
+	    <nav>This is a navigation Link</nav><nav>So is this one!</nav>
+	    <section>This notates a section of a document</section><aside>Here is some content put to the side</aside>
+    </div>
+    <footer>This information will be the footer of the document</footer>
+</body>
+</html>
