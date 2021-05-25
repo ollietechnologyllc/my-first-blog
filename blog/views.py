@@ -6,10 +6,12 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date').filter(author=request.user)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
+@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)  # This is a cleaner way than: Post.objects.get(pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
