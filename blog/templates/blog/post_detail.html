@@ -4,16 +4,20 @@
     <article class="post">
 	<aside class="actions">
 	    {% if user.is_authenticated %}
+
+                {% if post.published_date %}
+                    <div class="date">
+                    {{ post.published_date }}
+                    </div>
+                {% else %}
+                <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">{% include './icons/eye.svg' %} Publish</a>
+                {% endif %}
 	        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
 	            {% include './icons/pencil-fill.svg' %}
 	        </a>
+		<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove">{% include './icons/file-minus.svg' %}</span></a>
 	    {% endif %}
 	</aside>
-	{% if post.published_date %}
-	    <time class="date">
-		{{ post.published_date }}
-	    </time>
-	{% endif %}
 	<h2>{{ post.title }}</h2>
 	<p class="content">{{ post.text|linebreaksbr }}</p>
     </article>
