@@ -19,6 +19,7 @@
 	    {% endif %}
 	</aside>
 	<h2>{{ post.title }}</h2>
+        <aside><small>Author: {{ post.author }} Public: {{ post.make_public }}</small><aside>
 	<p class="content">{{ post.text|linebreaksbr }}</p>
     </article>
 {% endblock %}

@@ -6,12 +6,15 @@ from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-@login_required
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date').filter(author=request.user)
-    return render(request, 'blog/post_list.html', {'posts': posts})
+    if not request.user.is_authenticated:
+        posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date').filter(make_public=True)
+        otherposts = None
+    else:
+        otherposts = Post.objects.filter(published_date__lte=timezone.now()).filter(make_public=True).exclude(author=request.user).order_by('-published_date')
+        posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date').filter(author=request.user)
+    return render(request, 'blog/post_list.html', {'posts': posts,'otherposts': otherposts})
 
-@login_required
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)  # This is a cleaner way than: Post.objects.get(pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
@@ -63,3 +66,7 @@ def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
     return redirect('post_list')
+#def make_public(request, pk):
+#    post = get_object_or_404(Post, pk=pk)
+#    post.make_public()
+#    return redirect('post_detail', pk=post.pk)
