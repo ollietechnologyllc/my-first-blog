@@ -8,9 +8,12 @@
 	    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
 	    <aside><small>Author: {{ post.author }}</small><aside>
                 <p class="content">{{ post.text|linebreaksbr }}</p>
+		{% if post.make_public %}
+		    <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+		    {% endif %}    
         </article>
     {% endfor %}
-    <br>
+    <hr>
     <h1> Other People's Posts:</h1>
     <br>
     {% for post in otherposts %}
@@ -20,6 +23,7 @@
             <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
             <aside><small>Author: {{ post.author }}</small><aside>
                 <p class="content">{{ post.text|linebreaksbr }}</p>
+		<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
         </article>
     {% endfor %}
 
