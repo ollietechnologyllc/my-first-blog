@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Post(models.Model):
@@ -37,3 +37,6 @@ class Comment(models.Model):
         self.save()
     def __str__(self):
         return self.text
+#class Profile(models.Model):
+#    user = models.OneToOneField(User, on_delete=models.CASCADE)
+#    mobile = models.CharField(max_length=10)

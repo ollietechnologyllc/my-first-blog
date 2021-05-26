@@ -17,8 +17,21 @@
 		<td>{{ form.password }}</td>
 	    <tr>
         </table>
-
-	<input type="submit" value="login" />
-	<input type="hidden" name="next" value="{{ next }}" />
+        <table>
+	    <tr>
+		<td>
+	          <!--<input type="submit" value="login" />
+		  --><input type="hidden" name="next" value="{{ next }}" />
+	          <button type="submit" name="next" class="btn btn-primary">Login</button>
+	          <input class="btn btn-primary" type="hidden" name="next" value="{{ next }}" />
+    </form>
+    <!--form method="POST" action="{% url 'register' %}"-->
+    <form method="POST" action="{% url 'signup' %}">
+	{% csrf_token %}
+	
+	
+		<td><button type="submit" name="Register " class="btn btn-primary">Register</button>
+	    </tr>
+	</table>
     </form>
 {% endblock %}

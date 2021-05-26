@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Post, Comment
+from .models import Post, Comment#, Profile
 from django.utils import timezone
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, CustomUserCreationForm, SignUpForm
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def post_list(request):
@@ -96,3 +98,44 @@ def comment_remove(request, pk):
     return redirect('post_detail', pk=comment.post.pk)
 def approved_comments(request):
     return self.comments.filter(approved_comment=True)
+
+def register(request):
+   
+    if request.method == 'POST':
+        #f = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #form.refresh_from_db()
+            messages.success(request, 'Account created successfully')
+            return redirect('register')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'blog/register.html', {'form':form})
+
+#def update_user_data(user):
+#    Profile.objects.update_or_create(user=user, defaults={'mob': user.profile.mob},)
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+
+            #custom user value
+ #           user.profile.mob = form.cleaned_data.get('mob')
+ #           update_user_data(user)
+            #load the profle instance created by the signal
+            user.save()
+            raw_password = form.cleaned_data.get('password1')
+
+            #login user after signing up
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
+            # Redirect user to home page
+            return redirect('post_list')
+                
+    else:
+        form = SignUpForm()
+    return render(request, 'blog/signup.html', {'form': form})
