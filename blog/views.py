@@ -94,3 +94,5 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+def approved_comments(request):
+    return self.comments.filter(approved_comment=True)

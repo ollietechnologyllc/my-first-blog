@@ -9,8 +9,8 @@
 	    <aside><small>Author: {{ post.author }}</small><aside>
                 <p class="content">{{ post.text|linebreaksbr }}</p>
 		{% if post.make_public %}
-		    <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
-		    {% endif %}    
+		<a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+		{% endif %}    
         </article>
     {% endfor %}
     <hr>
